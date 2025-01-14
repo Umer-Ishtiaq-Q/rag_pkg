@@ -1,18 +1,16 @@
 # from calls import get_query_response
+import os
 
 from langchain_openai import ChatOpenAI
 from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain_core.prompts.chat import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from dotenv import load_dotenv
 
 from tools import (
     SendProfileViaEmail,
     RetrieveCompanyInformation
 )
 from prompts import tool_agent_prompt
-
-load_dotenv()
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
@@ -76,6 +74,24 @@ def get_query_response(query: str, chat_history: list):
     return response
 
 def get_bot_response(query: str, chat_history: list):
+    """
+    Process a query using the provided chat history and return the agent's response.
+
+    Args:
+        query (str): The user's query to be processed.
+        chat_history (list): List of previous chat messages for context.
+
+    Returns:
+        str: Response from the agent containing the answer and any additional data.
+    """
+    if os.getenv("OPENAI_API_KEY") is None:
+        print("Please set OPENAI_API_KEY environment variable")
+        raise Exception("OPENAI_API_KEY environment variable not set")
+    
+    if os.getenv("PINECONE_API_KEY") is None:
+        print("Please set PINECONE_API_KEY environment variable")
+        raise Exception("PINECONE_API_KEY environment variable not set")
+    
     response = get_query_response(query, chat_history)
 
     return response["output"]
