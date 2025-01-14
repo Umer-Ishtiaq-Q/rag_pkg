@@ -80,7 +80,7 @@ def get_bot_response(query: str, chat_history: list):
 
     return response["output"]
 
-# print(get_bot_response(
-#     query="What are the services provided by the company?",
-#     chat_history=[]
-# ))
+print(get_bot_response(
+    query="What are the services provided by the company?",
+    chat_history=[]
+))

@@ -1,9 +1,7 @@
 from langchain_openai import ChatOpenAI
-from langchain_anthropic import ChatAnthropic
 from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain_core.prompts.chat import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from langchain import hub
 
 from tools import (
     SendProfileViaEmail,
